@@ -1,0 +1,119 @@
+<?php
+
+include_once("config.php");
+
+// get vars
+$let    = $_REQUEST['let'];
+$start  = $_REQUEST['start'];
+if(!isset($let)) $let = "A";
+else $let = strtoupper($let);
+if(!$start) $start = 0;
+
+$let    = sanitize(2, 1, $let);
+$start  = sanitize(1, 5, $start);
+
+$perpage = 50;
+$page = $start + 50; $page =  $page/50;
+
+$ptitle = "Letter $let - Page $page - A to Z of recipes";
+$pkeys  = "easy recipe, food recipe, free recipe, healthy recipe";
+$pdesc  = "Browsing Letter $let - A to Z of food recipes";
+
+include_once("header.php");
+
+$temp3 = mysql_query("SELECT * FROM recipes WHERE BINARY LEFT(title, 1) = '$let'");
+$temp = mysql_query("SELECT * FROM recipes WHERE BINARY LEFT(title, 1) = '$let' ORDER BY title LIMIT $start, $perpage");
+$total = mysql_numrows($temp3);
+
+?>
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+					<?php
+						include("mainmenu.php");
+					?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px">
+						<table width="388" height="100%"  border="0" cellspacing="0" cellpadding="0">
+						<?php
+							include("toptext.php");
+						?>
+						<tr>
+							<td height="29" background="images/back-text-11.jpg" style="padding-left:23px"><strong>A TO Z OF ALL RECIPES ON THE SITE - LETTER <?php echo strtoupper($let); ?> - PAGE <?php $page = $start + 50; echo $page/50;?></strong></td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="100%" style="padding-top:2px " valign="top">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr><td valign="top" align="center"><br>
+								<?php
+								$letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+								$i = 0;
+								while($i < 26){
+								echo "<a href=\"viewall-$letters[$i]_page-0.html\"><b>$letters[$i]</b></a>";
+								$i++;
+								if(($i == 15) || ($i == 26)) echo "<br>";
+								else echo " | ";
+								}
+								?>
+								<br></td></tr>
+								<td width="100%" style="padding-left:11px;padding-top:3px " valign="top">
+								<?php
+								while($row = mysql_fetch_array($temp)) {
+									$title = str_replace(" ", "-", $row[title]);
+									$title = str_replace("/", "-", $title);
+									$title = str_replace("*", "", $title);
+									$title = str_replace("'", "", $title);
+									$title = str_replace("\"", "", $title);
+									$title = str_replace("(", "", $title);
+									$title = str_replace(")", "", $title);
+									$title = str_replace("#", "", $title);
+									$title = str_replace("&", "", $title);
+									$title = str_replace("$", "", $title);
+									$title = str_replace("!", "", $title);
+									$title = str_replace("£", "", $title);
+									$title = str_replace("@", "", $title);
+									$title = str_replace("+", "", $title);
+									$title = str_replace("[", "", $title);
+									$title = str_replace("]", "", $title);
+									$title = str_replace("\\", "", $title);
+									echo "- <a href=\"$row[id]-recipe-$title.html\">$row[title]</a><br>";
+								}
+								?>
+								<br><br><div align="center">
+								<?php
+								$start = $start + $perpage;
+								if($start > $perpage) {
+									$start2 = $start - ($perpage * 2);
+									if($start2 < 0) $start2 = 0;
+									echo "<a href=\"viewall-$let"."_"."page-$start2.html\">< <b>Previous Page</b></a> &nbsp;";
+								}
+								if($start < $total) echo "&nbsp; <a href=\"viewall-$let"."_"."page-$start.html\"><b>Next Page</b> ></a>";
+								?></div><br><br>
+									</td>
+								</tr>
+								</table>
+							</td>
+						</tr>																		
+						<tr>
+							<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+					
+				<?php
+					include("menuright.php");
+				?>
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+<?php
+	include("footer.php");
+?>

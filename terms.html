@@ -1,0 +1,70 @@
+<?php
+include_once("config.php");
+$ptitle = "Site Terms";
+$pkeys  = "terms, drink recipe, easy recipe, food recipe, free recipe";
+$pdesc  = "Recipe terms and conditions";
+include_once("header.php");
+?>
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+					<?php
+					include("mainmenu.php");
+					?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px">
+						<table width="388" height="100%"  border="0" cellspacing="0" cellpadding="0">
+						<?php
+						include("toptext.php");
+						?>
+						<tr>
+							<td height="29" background="images/back-text-11.jpg" style="padding-left:23px"><strong>SITE TERMS</strong></td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="100%" style="padding-top:2px ">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								<td width="100%" style="padding-left:11px;padding-top:3px " valign="top">
+
+								Your use of this Web site is subject to the following terms and conditions, which by using the Web site you are deemed to accept:<br><br>
+
+1. Content Rights: The copyright and all other rights in all of the material on this site are owned either by <?php echo $site_url; ?> or the original rights owner with permission. As a visitor to this site, you may copy material on this site for your own private or domestic purposes, but no copying for any commercial or business use is permitted.<br><br>
+
+2. The Information on this Site: Whilst <?php echo $site_url; ?> tries to ensure that the information on this site is accurate and complete, much of the information is supplied to us by third parties. <?php echo $site_url; ?> is not able to check the accuracy or completeness of that information and <?php echo $site_url; ?> does not accept any liability arising from any inaccuracy or omission in the information on this site. You are advised to verify the accuracy of any information before relying on it. In particular, when purchasing goods, and other event related services you should check and verify all the relevant information with the manufacturer or issuer.<br><br>
+
+3. Interruptions and Omissions in this Service: Whilst we take every care to ensure that the standard of this Web site remains high and to maintain the continuity of it, the Internet is not an inherently stable medium, and errors, omissions, interruptions of service and delays may occur at any time. As a result, <?php echo $site_url; ?> does not accept any ongoing obligation or responsibility to operate this Web site (or any particular part of it) or to provide the service offered on this Web site. <br><br>
+
+4. Links to Other Sites: On this site you will be offered automatic links to other sites which we hope you will be interested in. <?php echo $site_url; ?> does not accept any responsibility for the content of those sites, the owners of which do not necessarily have any link, commercial or otherwise, with <?php echo $site_url; ?>. 
+
+								
+									</td>
+								</tr>
+								<td><td><br><br></td><td></td></tr>
+								</table>
+							</td>
+						</tr>																		
+						<tr>
+							<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+					
+
+					<?php
+					include("menuright.php");
+					?>
+
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+<?php
+include("footer.php");
+?>

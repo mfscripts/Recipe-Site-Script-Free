@@ -1,0 +1,7 @@
+AddType application/x-httpd-php .html
+RewriteEngine on
+RewriteRule ^c-(.*).html$ search.html?category=$1 [QSA]
+RewriteRule ^l-(.*).html$ listing.html?sub=$1 [QSA]
+RewriteRule ^(.*)-recipe-(.*).html$ view.html?id=$1 [QSA]
+RewriteRule ^s-(.*).html$ search.html?criteria=$1 [QSA]
+RewriteRule ^viewall-(.*)_page-(.*).html$ atoz.html?let=$1&start=$2 [QSA]

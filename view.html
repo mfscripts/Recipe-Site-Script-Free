@@ -1,0 +1,208 @@
+<?php
+
+include_once("config.php");
+
+// get vars
+$id     = $_REQUEST['id'];
+$id     = sanitize(1, 11, $id);
+
+// start session for captcha
+session_start();
+
+$vote = $_REQUEST['vote'];
+if($submitme) {
+
+  $yourname = formatField($_POST['yourname']);
+  $comment  = formatField($_POST['comment']);
+  
+  // validation
+  if(strlen($yourname) == 0) $error = "Please enter your name.";
+  elseif(strlen($yourname) > 50) $error = "Maximum name length is 50 characters.";
+  elseif(strlen($comment) == 0) $error = "Please enter your comments.";
+  elseif(strlen($comment) > 500) $error = "Maximum comment length is 500 characters.";
+  elseif($_SESSION["captcha"] != $_POST['captcha']) $error = "Your confirmation text does not match, only enter the black characters.";
+
+  if(strlen($error) == 0) {
+  
+    $ip = $REMOTE_ADDR;
+    $insert_comment = mysql_query("INSERT INTO comments (name, comment, recipeid, dateadded, userip) VALUES ('".mysql_real_escape_string($yourname)."', '".mysql_real_escape_string($comment)."', ".$id.", NOW(), '".mysql_real_escape_string($ip)."')");
+	$hideform = TRUE;
+  
+    if(strlen($vote) > 0) {
+	  $lookup_field = "votestar".$vote;
+	  $get_values   = mysql_query("SELECT votestar1, votestar2, votestar3, votestar4, votestar5 FROM recipes WHERE id = ".$id." LIMIT 1");
+	  $votestar1 = mysql_result($get_values, 0, votestar1);
+	  $votestar2 = mysql_result($get_values, 0, votestar2);
+	  $votestar3 = mysql_result($get_values, 0, votestar3);
+	  $votestar4 = mysql_result($get_values, 0, votestar4);
+	  $votestar5 = mysql_result($get_values, 0, votestar5);
+	  if($vote == 1) $votestar1 = $votestar1+1;
+	  elseif($vote == 2) $votestar2 = $votestar2+1;
+	  elseif($vote == 3) $votestar3 = $votestar3+1;
+	  elseif($vote == 4) $votestar4 = $votestar4+1;
+	  elseif($vote == 5) $votestar5 = $votestar5+1;
+	  $total = ($votestar1 * 1)+($votestar2 * 2)+($votestar3 * 3)+($votestar4 * 4)+($votestar5 * 5);
+	  $total = $total/($votestar1+$votestar2+$votestar3+$votestar4+$votestar5);
+	  $update_joke = mysql_query("UPDATE recipes SET ".$lookup_field." = ".$$lookup_field.", votestartotal = ".$total." WHERE id = ".$id." LIMIT 1");
+	}
+  }
+}
+
+$temp 			= mysql_query("SELECT * FROM recipes WHERE id = ".$id." LIMIT 1");
+$title 			= UCWords(mysql_result($temp, 0, title));
+$category 		= mysql_result($temp, 0, category);
+$subcategory 	= mysql_result($temp, 0, category2);
+$recipe 		= mysql_result($temp, 0, recipe);
+$recipe 		= trim(str_replace(array("<h1>", "</h1>"), "", $recipe));
+$votestartotal 	= mysql_result($temp, 0, votestartotal);
+
+$ptitle = "Recipe for ".$title;
+$pkeys  = $title.", italian recipe, lasagna recipe, low carb recipe, low fat recipe";
+$pdesc  = $title." food recipe";
+
+// get comments
+$get_comments = mysql_query("SELECT name, comment, recipeid, dateadded, userip FROM comments WHERE recipeid = ".$id." ORDER BY dateadded DESC");
+
+include_once("header.php");
+
+?>
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+					<?php
+						include("mainmenu.php");
+					?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px" valign="top">
+						<table width="388" border="0" cellspacing="0" cellpadding="0">
+						<?php
+							include("toptext.php");
+						?>
+						<tr>
+							<td height="29" background="images/back-text-11.jpg" style="padding-left:23px"><strong>RECIPE FOR <?php echo strtoupper($title); ?></strong></td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="100%" style="padding-top:2px;" valign="top">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								<td width="100%" style="padding-left:11px;padding-top:3px;" valign="top">
+								
+								<table width='100%' cellpadding='0' cellspacing='0'>
+								<?php
+									echo "<tr><td valign='top'><b>Title:</b></td><td width='280'>$title</td></tr>";
+									if(strlen($category) > 0) echo "<tr><td><b>Category:</b></td><td>".UCWords($category)."</td></tr>";
+									if(strlen($subcategory) > 0) echo "<tr><td><b>Sub-Category:</b></td><td>".UCWords($subcategory)."</td></tr>";
+									
+									if(number_format($votestartotal, 0) == 0) $rating = "not yet rated";
+										else $rating = number_format($votestartotal, 0)." stars";
+										echo "<tr><td style='padding-top:4px;' height='35'><b>Rating:</b></td><td style='padding-top:4px;'><img src='images/small-stars-".number_format($votestartotal, 0).".gif' width='52' height='8' alt='".$rating."'>";
+									    echo "</td></tr>";
+									
+									echo "</table>";
+									
+									
+									echo "<b>Instructions:</b><br><br>";
+									echo $recipe."<br><br>";
+
+								?>
+									
+								
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left:11px;padding-top:3px;" valign="top" bgcolor="#FFFFFF">
+									&nbsp;
+									</td>
+								</tr>
+									
+								<?php
+								if(mysql_numrows($get_comments) > 0) {
+								?>
+								<tr><td style="padding-left:11px;padding-top:9px;" valign="top" bgcolor="#E7F2EA">
+									<table width='100%' cellpadding='0' cellspacing='0'>
+										<tr><td class="commentlabel"><b>User Comments:</b><br><br></td></tr>
+									<?php
+										while($row = mysql_fetch_array($get_comments)) {
+											$date_com = substr($row['dateadded'], 8, 2)."/".substr($row['dateadded'], 5, 2)."/".substr($row['dateadded'], 0, 4);
+											echo "<tr><td style='color:#999999;'>".$date_com." - ".$row['name']."</td></tr>";
+											echo "<tr><td style='color:#999999; border-bottom:1'>\"".$row['comment']."\"<br><br></td></tr>";
+										}
+									echo "</table>";
+									
+									?>
+										</td>
+								</tr>
+								<tr>
+									<td style="padding-left:11px;padding-top:3px;" valign="top" bgcolor="#FFFFFF">
+									&nbsp;
+									</td>
+								</tr>
+								<?php
+								}
+								?>
+								<?php
+									
+									if(!$hideform) {
+									?>
+									<tr>
+									<td style="padding-left:11px;padding-top:3px;" valign="top" bgcolor="#E7F2EA">
+									<?php
+									if(strlen($error) > 0) echo "<br><font style='color:red;'>ERROR: ".$error."</font><br><br>";
+									?>
+									<table width='100%' cellpadding='0' cellspacing='0'>
+										<form method='POST' action='view.html?id=<?php echo $id; ?>'>
+										<tr><td colspan="2" height="25" class="commentlabel"><b>Add A Comment/Rating:</b></td></tr>
+										<tr><td width="90" class="commentlabel">Your Name:</td><td><input name="yourname" value="<?php echo $yourname; ?>" type="text" class="smallform"></td></tr>
+										<?php
+										echo "<tr><td height='25' class='commentlabel'>Rating:</td><td>";
+										echo "<select name='vote' class='smallform'><option value=''>< rate ></option><option value='1'>1 out of 5</option><option value='2'>2 out of 5</option><option value='3'>3 out of 5</option><option value='4'>4 out of 5</option><option value='5'>5 out of 5</option></select>";
+										echo "</td></tr>";
+										?>
+										<tr><td valign="top" class="commentlabel">Comment:</td><td><textarea name="comment" class="smallform" cols="41" rows="5"><?php echo $comment; ?></textarea></td></tr>
+										<tr><td height="25" class="commentlabel">Confirm Code:</td><td>
+										
+											<table width='100%' cellpadding='0' cellspacing='0'>
+												<tr><td width="65"><img src="captcha.php" alt="captcha image" width="60" height="20"></td><td><input type="text" name="captcha" size="3" maxlength="3" class="smallform"> (black characters only)</td></tr>
+											</table>
+										
+										</td></tr>
+										<tr><td height="25"></td><td><input name='submit' type='submit' value='add comment' class='smallform'></td></tr>
+										<input name='submitme' type='hidden' value='1'>
+										</form>
+									</table><br>
+									<?php
+									}
+									?>
+									
+									</td>
+								</tr>			
+								
+								
+								</table>
+							</td>
+						</tr>																		
+						<tr>
+							<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+					
+					<?php
+						include("menuright.php");
+					?>
+					</td>
+				</tr>
+				</table>				
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+
+<?php
+	include("footer.php");
+?>

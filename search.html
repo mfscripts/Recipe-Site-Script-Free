@@ -1,0 +1,126 @@
+<?php
+
+include_once("config.php");
+
+// get vars
+$category = $_REQUEST['category'];
+$criteria = $_REQUEST['criteria'];
+$start    = $_REQUEST['start'];
+
+if(!$start) $start = 0;
+$perpage = 50;
+
+$start    = sanitize(1, 5, $start);
+
+if(strlen($category) > 0) $ptitle = UCWords($category)." Category Listing";
+else $ptitle = "Search Results for ".$criteria;
+$pkeys  = "free recipe, healthy recipe, italian recipe, lasagna recipe";
+$pdesc  = "Food recipe results for ".$criteria.$category;
+
+include_once("header.php");
+
+$string = "";
+if(strlen($category) > 0) {
+  $string   = " AND category LIKE '".mysql_real_escape_string($category)."%'";
+}
+if(strlen($criteria) > 0) {
+	$temp55 = mysql_query("INSERT INTO recent (term) VALUES ('".mysql_real_escape_string($criteria)."')");
+	$temp1 = mysql_query("SELECT * FROM recipes WHERE title LIKE '%".mysql_real_escape_string($criteria)."%'$string");
+	$total = mysql_numrows($temp1);
+}
+elseif(strlen($string) > 0) {
+	$temp1 = mysql_query("SELECT * FROM recipes WHERE category LIKE '".mysql_real_escape_string($category)."%'");
+	$total = mysql_numrows($temp1);
+}
+else {
+	$error = "ERROR: You must enter some search criteria.<br>";
+}
+?>
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+					<?php
+					include("mainmenu.php");
+					?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px" valign="top">
+						<table width="388" border="0" cellspacing="0" cellpadding="0">
+						<?php
+						include("toptext.php");
+						?>
+
+						<tr>
+							<td height="29" background="images/back-text-11.jpg" style="padding-left:23px"><strong>SEARCH RESULTS FOR <?php if(strlen($criteria) == 0) echo "CATEGORY ".strtoupper($category); else echo strtoupper($criteria); ?></strong> (<?php echo $total; ?> results)</td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="100%" style="padding-top:2px ">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								<td width="100%" style="padding-left:11px;padding-top:3px " valign="top">
+								<?php
+								if(strlen($error) > 0) echo $error;
+								else {
+								if($total == 0) echo "There are no search results for that criteria, please try again or browse by category on the left.";
+								else {
+								$temp = mysql_query("SELECT * FROM recipes WHERE title LIKE '%".mysql_real_escape_string($criteria)."%'$string ORDER BY title LIMIT $start, $perpage");
+								while($row = mysql_fetch_array($temp)) {
+								$title = str_replace(" ", "-", $row[title]);
+								$title = str_replace("/", "-", $title);
+								$title = str_replace("*", "", $title);
+								$title = str_replace("'", "", $title);
+								$title = str_replace("\"", "", $title);
+								$title = str_replace("(", "", $title);
+								$title = str_replace(")", "", $title);
+								$title = str_replace("#", "", $title);
+								$title = str_replace("&", "", $title);
+								$title = str_replace("$", "", $title);
+								$title = str_replace("!", "", $title);
+								$title = str_replace("£", "", $title);
+								$title = str_replace("@", "", $title);
+								$title = str_replace("+", "", $title);
+								$title = str_replace("[", "", $title);
+								$title = str_replace("]", "", $title);
+								$title = str_replace("\\", "", $title);
+									echo "- <a href=\"$row[id]-recipe-$title.html\">".UCFirst($row[title])."</a><br>";
+								}
+								?><br><br><div align="center">
+								<?php
+								$start = $start + $perpage;
+								if($start > $perpage) {
+									$start2 = $start - ($perpage * 2);
+									if($start2 < 0) $start2 = 0;
+									echo "<a href=\"search.html?criteria=$criteria&category=$category&start=$start2\">< <b>Previous Page</b></a> &nbsp;";
+								}
+								if($start < $total) echo "&nbsp; <a href=\"search.html?criteria=$criteria&category=$category&start=$start\"><b>Next Page</b> ></a>";
+								}
+								}
+								?></div>
+								<br><br>
+									</td>
+								</tr>
+								</table>
+							</td>
+						</tr>																		
+						<tr>
+							<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+					
+					<?php
+						include("menuright.php");
+					?>
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+<?php
+	include("footer.php");
+?>

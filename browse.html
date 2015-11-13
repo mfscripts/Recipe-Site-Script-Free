@@ -1,0 +1,80 @@
+<?php
+
+include_once("config.php");
+
+$ptitle = "Browsing by category";
+$pkeys  = "italian recipe, lasagna recipe, low carb recipe, low fat recipe";
+$pdesc  = "Browse all our recipe categories";
+
+include_once("header.php");
+
+?>
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+					<?php
+						include("mainmenu.php");
+					?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px">
+						<table width="388" height="100%"  border="0" cellspacing="0" cellpadding="0">
+						<?php
+						include("toptext.php");
+						?>
+						<tr>
+							<td height="29" background="images/back-text-11.jpg" style="padding-left:23px"><strong>BROWSE ALL RECIPES ON THE SITE</strong></td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="100%" style="padding-top:2px ">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								<td width="194" style="padding-left:11px;padding-top:3px " valign="top">
+								<?php
+								$i = 0;
+								$rows = count($cats);
+								$half = $rows/2;
+								while($i < $half){
+										echo "<img src=\"images/b-5.gif\" width=\"3\" height=\"5\" align=\"absmiddle\" style=\"margin-right:6px\"><a href=\"c-$cats[$i].html\"><strong>".UCWords($cats[$i])."</strong></a><br><img src=\"images/spacer.gif\" width=\"1\" height=\"1\"><br>";
+										$i++;
+								}
+								
+								?>
+									</td>
+									<td valign="top" style="padding-top:3px ">
+									<?php
+									while($i < $rows){
+										echo "<img src=\"images/b-5.gif\" width=\"3\" height=\"5\" align=\"absmiddle\" style=\"margin-right:6px\"><a href=\"c-$cats[$i].html\"><strong>".UCWords($cats[$i])."</strong></a><br><img src=\"images/spacer.gif\" width=\"1\" height=\"1\"><br>";
+										$i++;
+								}
+									?>
+									</td>
+									
+								</tr>
+								<td><td colspan="2"><br><br></td><td></td></tr>
+								</table>
+							</td>
+						</tr>																		
+						<tr>
+							<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+					
+				<?php
+					include("menuright.php");
+				?>
+
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+<?php
+	include("footer.php");
+?>

@@ -1,0 +1,62 @@
+<?php
+include_once("config.php");
+$ptitle = "Friends of ".$site_name;
+$pkeys  = "friends, links, cake recipe, chicken recipe,chili recipe, cookie recipe";
+$pdesc  = "Recommended friends and food resources";
+include_once("header.php");
+?>
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+					<?php
+					include("mainmenu.php");
+					?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px">
+						<table width="388" height="100%"  border="0" cellspacing="0" cellpadding="0">
+						<?php
+						include("toptext.php");
+						?>
+						<tr>
+							<td height="29" background="images/back-text-11.jpg" style="padding-left:23px"><strong>FRIENDS OF <?php echo strtoupper($site_name); ?></strong></td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="100%" style="padding-top:2px ">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								<td width="100%" style="padding-left:11px;padding-top:3px " valign="top">
+Here are some sites we think you may find interesting. If you would like to exchange links with us, please contact us with the details of your link and where a backlink is located using the <a href="contact-us.html">contact page</a>.<br><br>
+									<?php
+									include("links.inc.php");
+									?>
+								
+									</td>
+								</tr>
+								<td><td><br><br></td><td></td></tr>
+								</table>
+							</td>
+						</tr>																		
+						<tr>
+							<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+					
+				<?php
+				include("menuright.php");
+				?>
+
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+<?php
+include("footer.php");
+?>

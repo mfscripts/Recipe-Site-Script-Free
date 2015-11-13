@@ -1,0 +1,148 @@
+<?php
+
+include_once("config.php");
+
+$ptitle = "Welcome";
+$pkeys  = "all recipe, cake recipe, chicken recipe,chili recipe";
+$pdesc  = "Welcome to ".$site_name." - Our site is packed full of 1000's of the best food recipes";
+
+include_once("header.php");
+
+?>
+
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+					<?php
+					include("mainmenu.php");
+					?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px">
+						<table width="388" height="100%"  border="0" cellspacing="0" cellpadding="0">
+						<?php
+						include("toptext.php");
+						?>
+						<tr>
+							<td height="26" background="images/back-text-10.jpg" style="padding-left:23px"><strong>WELCOME</strong></td>
+						</tr>
+						<tr>
+							<td style="padding-top:6px;padding-bottom:11px">
+								<img src="images/pic-10.jpg" width="147" height="120"  align="left">
+								<img src="images/text-20.jpg" style="margin-bottom:5px "><br>
+								<div style=" font-size:11px;padding-bottom:11px"><strong  style="color:#750D22">100%</strong> <strong  style="color:#404040"> FREE RECIPES</strong></div>
+								<strong>Welcome</strong> to <?php echo $site_name; ?> - Your free online resource for over 22,000 cooking recipes. Start by either browsing the a to z using the left menu, or searching the archive above.
+							</td>
+						</tr>
+						<tr>
+							<td height="29" background="images/back-text-11.jpg" style="padding-left:23px"><strong>OUR POPULAR SEARCHES</strong></td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="81" style="padding-top:2px ">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="194" style="padding-left:11px ">
+										<a href="s-caviar.html"><img src="images/pic-1.jpg" width="85" height="67" align="left" style="margin-right:10px" border="0" alt="Caviar">
+										<div style="padding-top:29px"><strong style="font-size:11px ">CAVIAR</strong></div>									</a>
+									</td>
+									<td>
+										<a href="s-wine.html"><img src="images/pic-4.jpg" width="85" height="67" align="left" style="margin-right:10px" border="0" alt="Wine">
+										<div style="padding-top:29px"><strong style="font-size:11px ">WINE</strong></div>		
+										</a>
+									</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td  height="81" style="padding-top:2px ">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="194" style="padding-left:11px ">
+									<a href="s-cheese.html">
+										<img src="images/pic-2.jpg" width="85" height="67" align="left" style="margin-right:10px" border="0" alt="Cheese">
+										<div style="padding-top:29px"><strong style="font-size:11px ">CHEESE</strong></div>									</a>
+									</td>
+									<td>
+										<a href="s-salmon.html"><img src="images/pic-5.jpg" width="85" height="67" align="left" style="margin-right:10px" border="0" alt="Salmon">
+										<div style="padding-top:29px"><strong style="font-size:11px ">SALMON</strong></div>	</a>	
+									</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="87" style="padding-top:2px " valign="top">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="194" style="padding-left:11px ">
+										<a href="s-bread.html"><img src="images/pic-3.jpg" width="85" height="67" align="left" style="margin-right:10px" border="0" alt="Bread">
+										<div style="padding-top:29px"><strong style="font-size:11px ">BREAD</strong></div></a>									
+									</td>
+									<td>
+										<a href="s-truffles.html"><img src="images/pic-6.jpg" width="85" height="67" align="left" style="margin-right:10px" border="0" alt="Truffles">
+										<div style="padding-top:29px"><strong style="font-size:11px ">TRUFFLES</strong></div>		</a>
+									</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="100%" valign="top" bgcolor="#DFDFDF">
+								<table width="382" height="106"  border="0" cellspacing="0" cellpadding="0">
+								<tr><td bgcolor="#727272"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+								<tr>
+									<td height="100%" background="images/back-end-2.jpg" style="padding:6px;padding-bottom:5px ">
+										<img src="images/pic-7.jpg" width="145" height="91" align="left" style="margin-right:10px">
+										<div style=" padding-top:6px;line-height:13px"><strong>Global Recipes:</strong> We've got recipes from all over the globe originating in over 70 countries.<br><br><a href="browse.html">Click here for more information</a></div>
+									</td>
+								</tr>
+								<tr><td bgcolor="#727272"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+					
+					<td width="200" height="100%" valign="top">
+						<table width="200" height="100%"  border="0" cellspacing="0" cellpadding="0" background="images/back-text-4.jpg">
+						<tr><td height="23" background="images/text-4.jpg" style="background-repeat:no-repeat;background-position:top;color:#FFFFFF;padding-top:2px" align="center"><strong>LATEST NEWS</strong></td>
+						</tr>
+						<tr>
+							<td style="padding-top:10px;padding-left:8px;line-height:14px;padding-bottom:18px;padding-right:10px" valign="top"> 27 Aug 2007:<br>
+								<strong><?php echo $site_name; ?></strong> has finally launched the redesign of the worlds most helpful recipe site. We have over 22,000 recipes that we've gathered over the past 5 years incorporating ingredients and processes from all over the world.<br><br>To find your cooking recipe, either start browsing by using the menu options on the left category menu, or search using the box above.
+							</td>
+						</tr>
+						<tr><td bgcolor="#727272"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+						<tr><td bgcolor="#FFFFFF"><img src="images/spacer.gif" width="1" height="4"></td></tr>
+						
+		
+						
+						<tr><td height="140" background="images/back-10.jpg" style="background-repeat:no-repeat;background-position:top;padding:3px" valign="top">
+							<br><br><br><br><br><br>
+							<img src="images/b-5.gif" width="3" height="5" align="absmiddle" style="margin-right:3px;margin-left:6px"><strong ><a href="c-desserts.html"  style="color:#262626">Read More</a></strong>
+						</td></tr>						
+						<tr><td bgcolor="#FFFFFF"><img src="images/spacer.gif" width="1" height="7"></td></tr>
+						<tr><td height="137" background="images/back-11.jpg" style="background-repeat:no-repeat;background-position:top;padding-top:11px;padding-left:6px" valign="top">
+							<br><br><br><br><br>
+							<img src="images/b-5.gif" width="3" height="5" align="absmiddle" style="margin-right:3px;margin-left:3px"><strong><a href="s-stir-fry.html"   style="color:#262626">Read More</a></strong>
+						</td></tr>
+						<tr><td bgcolor="#FFFFFF"><img src="images/spacer.gif" width="1" height="8"></td></tr>						
+						</table>
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+<?php
+include("footer.php");
+?>

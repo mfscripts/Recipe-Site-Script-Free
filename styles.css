@@ -1,0 +1,38 @@
+body,td,th {
+	font-family: verdana;
+	font-size: 10px;
+	color: 1D1D1D;
+	line-height:12px;
+}
+img{border:0;}
+a {
+	font-family: verdana;
+	font-size: 10px;
+	color: 1D1D1D;
+}
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: 1D1D1D;
+}
+a:hover {
+	text-decoration: underline;
+	color: 1D1D1D;
+}
+a:active {
+	text-decoration: none;
+	color: 1D1D1D;
+}
+.style1 {
+	font-family: Tahoma;
+	font-weight: bold;
+	font-size: 11px;
+}
+.smallform {
+	font-size: 10px;
+}
+.commentlabel {
+	color: #666666;
+}

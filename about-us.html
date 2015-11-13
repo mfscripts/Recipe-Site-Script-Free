@@ -1,0 +1,66 @@
+<?php
+include_once("config.php");
+$ptitle = "About Us";
+$pkeys  = "about us, cookie recipe, cooking recipe, crock pot recipe";
+$pdesc  = "About ".$site_name;
+include_once("header.php");
+?>
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+<?php
+include("mainmenu.php");
+?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px">
+						<table width="388" height="100%"  border="0" cellspacing="0" cellpadding="0">
+						<?php
+						include("toptext.php");
+						?>
+						<tr>
+							<td height="29" background="images/back-text-11.jpg" style="padding-left:23px"><strong>ABOUT US</strong></td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="100%" style="padding-top:2px ">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								<td width="100%" style="padding-left:11px;padding-top:3px " valign="top">
+
+								<b><?php echo $site_name; ?></b> is a family run website. We have collected recipes for over 5 years now &amp; in order to share the information we have collected, we've spent 3 months creating this website for you all to benefit from.<br><br>
+								There are over 23,000 recipes here - <b>YES TWENTY THREE THOUSAND!</b> This means that no matter what cooking ingredients you have (or lack of cooking ingredients!) you are bound to find something here.<br><br>Use the recipe search box above or alternatively browse by category on the left menu or A to Z using the relevant options.<br><br>
+								Each week we also suggest cooking recipes which we have tried &amp; highly recommend so check them out also!<br><br>
+								Finally, we are always looking at ways to advance the website, so if you have any comments or things to contribute feel free to contact us <a href="contact-us.html">using this page</a>.<br><br>
+								Thanks for stopping by,<br>
+								<a href="http://www.<?php echo $site_url; ?>"><b><?php echo $site_name; ?></b></a><br><br>
+								
+									</td>
+								</tr>
+								<td><td><br><br></td><td></td></tr>
+								</table>
+							</td>
+						</tr>																		
+						<tr>
+							<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+					
+
+					<?php
+					include("menuright.php");
+					?>
+
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+<?php
+include("footer.php");
+?>

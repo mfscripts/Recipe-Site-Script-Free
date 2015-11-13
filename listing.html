@@ -1,0 +1,87 @@
+<?php
+
+include_once("config.php");
+
+// get vars
+$sub    = $_REQUEST['sub'];
+
+$ptitle = $sub;
+$pkeys  = "recipes, healthy recipe, italian recipe, lasagna recipe, low carb recipe";
+$pdesc  = "Food recipe listing for ".$sub;
+
+include_once("header.php");
+
+?>
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+					<?php
+					include("mainmenu.php");
+					?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px" valign="top">
+						<table width="388" border="0" cellspacing="0" cellpadding="0">
+						<?php
+						include("toptext.php");
+						?>
+
+						<tr>
+							<td height="29" background="images/back-text-11.jpg" style="padding-left:23px"><strong>RECIPES FOR <?php echo strtoupper($sub); ?></strong></td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="100%" style="padding-top:2px ">
+								<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								<td width="100%" style="padding-left:11px;padding-top:3px " valign="top">
+								<?php
+								$temp = mysql_query("SELECT * FROM recipes WHERE category = '".mysql_real_escape_string($sub)."' ORDER BY title");
+								while($row = mysql_fetch_array($temp)) {
+								$title = str_replace(" ", "-", $row[title]);
+								$title = str_replace("/", "-", $title);
+								$title = str_replace("*", "", $title);
+								$title = str_replace("'", "", $title);
+								$title = str_replace("\"", "", $title);
+								$title = str_replace("(", "", $title);
+								$title = str_replace(")", "", $title);
+								$title = str_replace("#", "", $title);
+								$title = str_replace("&", "", $title);
+								$title = str_replace("$", "", $title);
+								$title = str_replace("!", "", $title);
+								$title = str_replace("£", "", $title);
+								$title = str_replace("@", "", $title);
+								$title = str_replace("+", "", $title);
+								$title = str_replace("[", "", $title);
+								$title = str_replace("]", "", $title);
+								$title = str_replace("\\", "", $title);
+								echo "- <a href=\"$row[id]-recipe-$title.html\">$row[title]</a><br>";
+								}
+								?><br><br>
+									</td>
+								</tr>
+								</table>
+							</td>
+						</tr>																		
+						<tr>
+							<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+					
+					<?php
+						include("menuright.php");
+					?>
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+
+<?php
+	include("footer.php");
+?>

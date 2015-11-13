@@ -1,0 +1,113 @@
+<?php
+
+include_once("config.php");
+
+$showform = TRUE;
+
+// get vars
+$sendit = $_REQUEST['sendit'];
+
+$ptitle = "Contact Us";
+$pkeys  = "contact us, chicken recipe,chili recipe, cookie recipe, cooking recipe, crock pot recipe";
+$pdesc  = "Contact us for more information on advertising or to simply submit a recipe";
+
+include_once("header.php");
+
+if(isset($sendit)) {
+
+	// get vars
+	$youremail = $_REQUEST['youremail'];
+	$subject   = $_REQUEST['subject'];
+	$message   = $_REQUEST['message'];
+
+	$errorstring = "";
+	$youremail = strtolower(formatField($youremail));
+	if(strlen($youremail) == 0) $errorstring .="You must specify your email.<br>";
+	if(strlen($subject) == 0) $errorstring .="You must specify a subject.<br>";
+	if(strlen($message) == 0) $errorstring .="You have not entered a message.<br>";
+	if(strlen($youremail) < 9 || strlen($youremail) > 64) $errorstring .= "Please enter a valid email address.<br>";
+	else
+	{
+		$emailtail = strstr($youremail, '@');
+		if(!strstr($youremail, '@') || !strstr($emailtail, '.')) $errorstring .= "Please enter a valid email address.<br>";
+	}
+	if(strlen($errorstring) == 0){
+		$subject = "Contact from the ".$site_url." site - ".$subject;
+		$sent = mail($site_admin, $subject, $message, "FROM: ".$youremail);
+		if($sent) $showform = FALSE;
+	}
+}
+?>
+<tr>
+	<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+		<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="160" height="100%" valign="top">
+			<?php
+				include("mainmenu.php");
+			?>
+			</td>
+			
+			<td width="397" align="right" style="padding-right:3px">
+				<table width="388" height="100%"  border="0" cellspacing="0" cellpadding="0">
+				<?php
+					include("toptext.php");
+				?>
+				<tr>
+					<td height="29" background="images/back-text-11.jpg" style="padding-left:23px;"><strong>CONTACT US</strong></td>
+				</tr>
+				<tr>
+					<td bgcolor="#DFDFDF" height="100%" style="padding-top:2px ">
+						<table width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0">
+						<tr>
+						<td width="100%" style="padding-left:11px;padding-top:3px " valign="top">
+
+						<?php
+						  if($showform == TRUE) {
+						?>
+						   Any questions or comments about the site or services we offer, feel free to contact us using the form below:<br><br>
+					   <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+						  <tr><form method="post" action="contact-us.html"><input type="hidden" name="sendit" value="yes"><td style="padding:0px;" align="center"><br>
+							<?php if(strlen($errorstring) > 0) echo "<table cellpadding=\"8\" cellspacing=\"0\" border=\"0\" align=\"center\" bgcolor=\"#cccccc\"><tr><td><font class=\"error\"><b>Error(s) Found:</b><br><br>$errorstring</td></tr></table><br><br>";?>
+							<table cellpadding="5" cellspacing="0" border="0" align="left">
+							<tr><td><b>Your Email:</b></td><td><input type="text" name="youremail" class="form" style="width:250px;" value="<?php echo stripslashes($youremail); ?>" <?php echo $script1; ?>></td></tr>
+							  <tr><td><b>Subject:</b></td><td><input type="text" name="subject" class="form" style="width:250px;" value="<?php echo stripslashes($subject); ?>" <?php echo $script1; ?>></td></tr>
+							  <tr><td valign="top"><b>Message:</b></td><td><textarea name="message" class="form" style="width:250px;" rows="10" <?php echo $script1; ?>><?php echo stripslashes($message); ?></textarea></td></tr>
+							  <tr><td></td><td><input type="submit" value="send" class="form" <?php echo $script1; ?>>&nbsp;&nbsp;<input type="reset" value="reset" class="form" <?php echo $script1; ?>></td></tr>
+							  <tr><td colspan="2" align="right"><br><a href="javascript:history.go(-1);">back</a></td></tr>
+							</table><br>
+						  </td></form></tr>
+						</table>
+						<?php 
+						} 
+						else echo "<b>Your message has been sent to ".$site_name.". We will endeavour to respond within the next 48 hours.<br><br>Thanks for your comments,<br>".$site_url."</b><br><br>";
+						?>
+										
+							</td>
+						</tr>
+						<td><td><br><br></td><td></td></tr>
+						</table>
+					</td>
+				</tr>																		
+				<tr>
+					<td height="3"><img src="images/spacer.gif" width="1" height="3"></td>
+				</tr>
+				</table>
+			</td>
+
+			<?php
+				include("menuright.php");
+			?>
+
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="images/back-end.jpg"><img src="images/spacer.gif" width="1" height="1"></td></tr>
+
+<?php
+	include("footer.php");
+?>

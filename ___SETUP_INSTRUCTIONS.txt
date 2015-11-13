@@ -1,0 +1,16 @@
+Setup Instructions:
+
+- Upload the main zip file to your hosting area.
+- Unzip the zip file ensuring all folders are kept.
+- Amend config.php with your site_name, site_url and site_admin along with other optional amendments.
+- Set the following permissions on directories:
+  CHMOD 777 - /cache
+
+- Create a new database in mysql.
+- Import the .sql file stored within the sql directory.
+- Update db_connect.php in the root to connect correctly to your mysql database.
+- Add a http username/password to the admin directory.
+
+You should now be set to go!
+
+Contact support on support@arwscripts.com for help at any stage.

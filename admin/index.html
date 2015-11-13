@@ -1,0 +1,109 @@
+<?php
+include_once("../config.php");
+include_once("../function-library.php");
+$ptitle = "Admin - Add New Recipe";
+include_once("../header.php");
+
+// get vars
+$submitme = $_REQUEST['submitme'];
+
+// validate on submit
+if($submitme) {
+
+  // get vars
+  $title    = $_REQUEST['title'];
+  $category = $_REQUEST['category'];
+  $recipe   = $_REQUEST['recipe'];
+
+  if(strlen($title) == 0) $error = "Please enter the recipe title.";
+  elseif(strlen($title) > 150) $error = "The title can not be greater than 150 characters.";
+  elseif(strlen($category) == 0) $error = "Please choose a category.";
+  elseif(strlen($recipe) == 0) $error = "Please enter the recipe details.";
+  
+  if(strlen($error) == 0) {
+    $title = trim($title);
+	$recipe = trim($recipe);
+	// convert recipe new lines to <br>
+	$recipe = str_replace("\n", "<br>", $recipe);
+	$insert_recipe = mysql_query("INSERT INTO recipes (title, category, recipe) VALUES ('".mysql_real_escape_string($title)."', '".mysql_real_escape_string($category)."', '".mysql_real_escape_string($recipe)."')");
+	if($insert_recipe) $success = "Recipe inserted and live on the site.";
+	else $error = "There was a problem adding the recipe, please try again later.";
+  }
+}
+?>
+		<tr>
+			<td height="100%" valign="top" style="padding-left:10px;padding-top:11px">
+				<table width="757"  height="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="160" height="100%" valign="top">
+					<?php
+						include("../mainmenu.php");
+					?>
+					</td>
+					
+					<td width="397" align="right" style="padding-right:3px">
+						<table width="388" height="100%"  border="0" cellspacing="0" cellpadding="0">
+						<?php
+							include("../toptext.php");
+						?>
+						<tr>
+							<td height="29" background="http://<?php echo $site_url; ?>/images/back-text-11.jpg" style="padding-left:23px"><strong>ADMIN - ADD NEW RECIPE</strong></td>
+						</tr>
+						<tr>
+							<td bgcolor="#DFDFDF" height="100%" valign="top" style="padding:8px">
+								Use the following form to add a new recipe to the system:<br><br>
+								
+								<?php
+								if(strlen($error) > 0) echo "<b><font style='color:red;'> - ".$error."</font></b><br><br>";
+								elseif(strlen($success) > 0) {
+								  echo "<b><font style='color:green;'> - ".$success."</font></b><br><br>";
+								  $title = "";
+								  $category = "";
+								  $recipe = "";
+								}
+								?>
+								
+								<table width="100%" cellspacing="0" cellpadding="3">
+								 <form name="newrecipe" method="POST" action="index.html">
+								  <tr><td align="right" width="80"><b>recipe title:</b>&nbsp;</td><td><input type="text" name="title" value="<?php echo $title; ?>"></td></tr>
+								  <tr><td align="right"><b>category:</b>&nbsp;</td><td><select name="category">
+								  <option value=""><< choose >></option>
+								  <?php
+								  foreach($cats AS $value) {
+								    echo '<option value="'.$value.'"';
+									if($category == $value) echo " SELECTED";
+									echo '>'.UCWords($value).'</option>';
+								  }
+								  ?>
+								  </select></td></tr>
+								  <tr><td align="right" valign="top"><b>recipe:</b>&nbsp;</td><td><textarea cols="30" rows="15" name="recipe"><?php echo $recipe; ?></textarea></td></tr>
+								  <tr><td>&nbsp;</td><td><input name="submitme" type="hidden" value="1"><input name="submit" type="submit" value="add recipe"></td></tr>
+								 </form>
+								  
+								</table>
+								  
+								
+							</td>
+						</tr>																		
+						<tr>
+							<td height="3"><img src="http://<?php echo $site_url; ?>/images/spacer.gif" width="1" height="3"></td>
+						</tr>
+						</table>
+					</td>
+
+					<?php
+						include("../menuright.php");
+					?>
+
+				</tr>
+				</table>
+			</td>
+		</tr>		
+		</table>
+	</td>
+</tr>
+<tr><td height="10" background="http://<?php echo $site_url; ?>/images/back-end.jpg"><img src="http://<?php echo $site_url; ?>/images/spacer.gif" width="1" height="1"></td></tr>
+
+<?php
+	include("../footer.php");
+?>
