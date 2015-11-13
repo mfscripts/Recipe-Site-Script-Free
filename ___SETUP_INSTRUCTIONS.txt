@@ -13,4 +13,4 @@ Setup Instructions:
 
 You should now be set to go!
 
-Contact support on support@arwscripts.com for help at any stage.
+Check out http://mfscripts.com/ for other PHP scripts!
